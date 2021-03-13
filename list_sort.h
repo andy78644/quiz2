@@ -2,7 +2,7 @@
 
 typedef struct __element {
     char *value;
-    struct __element *next;
+    // struct __element *next;
     struct list_head list;
 } list_ele_t;
 

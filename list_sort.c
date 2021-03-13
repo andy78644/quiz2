@@ -36,7 +36,9 @@ static void q_free(queue_t *q)
     list_ele_t *current = q->head;
     while (current) {
         list_ele_t *tmp = current;
-        current = current->next;
+        if (current->list.next == &(q->list))
+          break;
+        current = list_entry(current->list.next, list_ele_t, list);
         free(tmp->value);
         free(tmp);
     }
@@ -58,7 +60,7 @@ bool q_insert_head(queue_t *q, char *s)
     }
 
     newh->value = new_value;
-    newh->next = q->head;
+    newh->list.next = &(q->list);
     q->head = newh;
     if (q->size == 0)
         q->tail = newh;
